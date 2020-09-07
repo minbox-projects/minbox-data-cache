@@ -10,13 +10,54 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.minbox.framework</groupId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
+    <modules>
+        <module>cache-client</module>
+        <module>cache-management</module>
+        <module>cache-management-ui</module>
+        <module>cache-client-spring-support</module>
+    </modules>
     <artifactId>minbox-data-cache</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>${revision}</version>
     <url>https://github.com/minbox-projects/minbox-data-cache</url>
     <description>
-        Provide level cache integration solutions, support Redis, Caffeine
+        基于Redis + Caffeine实现的分布式多级缓存解决方案，提供实时的缓存热点分析、命中分析统计.
     </description>
+    <properties>
+        <revision>1.0.0-SNAPSHOT</revision>
+        <caffeine.version>2.8.5</caffeine.version>
+        <spring-data-redis.version>2.3.3.RELEASE</spring-data-redis.version>
+        <redisson.version>3.13.4</redisson.version>
+    </properties>
+    <developers>
+        <developer>
+            <id>hengboy</id>
+            <name>恒宇少年 - 于起宇</name>
+            <url>https://blog.yuqiyu.com</url>
+            <organization>minbox-projects</organization>
+            <organizationUrl>https://github.com/minbox-projects</organizationUrl>
+            <email>hengboy@minbox.org</email>
+        </developer>
+    </developers>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.github.ben-manes.caffeine</groupId>
+                <artifactId>caffeine</artifactId>
+                <version>${caffeine.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-redis</artifactId>
+                <version>${spring-data-redis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson</artifactId>
+                <version>${redisson.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
@@ -45,34 +86,4 @@
             </snapshots>
         </repository>
     </repositories>
-    <developers>
-        <developer>
-            <id>hengboy</id>
-            <name>恒宇少年 - 于起宇</name>
-            <url>https://blog.yuqiyu.com</url>
-            <organization>minbox-projects</organization>
-            <organizationUrl>https://github.com/minbox-projects</organizationUrl>
-            <email>hengboy@minbox.org</email>
-        </developer>
-    </developers>
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-cache</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <scope>compile</scope>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>com.github.ben-manes.caffeine</groupId>
-            <artifactId>caffeine</artifactId>
-        </dependency>
-    </dependencies>
 </project>

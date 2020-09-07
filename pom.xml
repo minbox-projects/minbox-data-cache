@@ -5,14 +5,14 @@
     <parent>
         <groupId>org.minbox.framework</groupId>
         <artifactId>minbox-parent</artifactId>
-        <version>1.0.1-SNAPSHOT</version>
+        <version>1.0.1.RELEASE</version>
         <relativePath/>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.minbox.framework</groupId>
     <packaging>jar</packaging>
     <artifactId>minbox-data-cache</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <url>https://github.com/minbox-projects/minbox-data-cache</url>
     <description>
         Provide level cache integration solutions, support Redis, Caffeine

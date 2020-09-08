@@ -1,9 +1,15 @@
 package org.minbox.framework.data.cache.client.delegate.support;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
+import com.github.benmanes.caffeine.cache.RemovalCause;
+import com.github.benmanes.caffeine.cache.RemovalListener;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.minbox.framework.data.cache.client.configuration.CacheConfiguration;
 import org.minbox.framework.data.cache.client.delegate.AbstractCacheDelegate;
 import org.minbox.framework.data.cache.client.delegate.CacheDelegate;
+import org.minbox.framework.data.cache.client.listener.CacheRemoveListener;
+import org.minbox.framework.data.cache.client.listener.CacheRemovalNotification;
+import org.minbox.framework.data.cache.core.enums.CacheRemovalCause;
 
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -42,6 +48,11 @@ public class CaffeineCacheDelegate<K, V> extends AbstractCacheDelegate<K, V> {
         if (configuration.getExpireAfterWriteMillis() > 0) {
             caffeine.expireAfterWrite(configuration.getExpireAfterWriteMillis(), TimeUnit.MILLISECONDS);
         }
+        // configure removal listener
+        CacheRemoveListener removeListener = configuration.getRemoveListener();
+        if (removeListener != null) {
+            caffeine.removalListener(this.toCaffeineRemovalListener(removeListener));
+        }
         this.cache = caffeine.build();
     }
 
@@ -78,5 +89,13 @@ public class CaffeineCacheDelegate<K, V> extends AbstractCacheDelegate<K, V> {
     @Override
     public void removeCache(K key) {
         this.cache.invalidate(key);
+    }
+
+    private RemovalListener toCaffeineRemovalListener(CacheRemoveListener removeListener) {
+        return (key, value, cause) -> {
+            CacheRemovalCause cacheRemovalCause = CacheRemovalCause.valueOf(cause.name());
+            CacheRemovalNotification notification = new CacheRemovalNotification(key, value, cacheRemovalCause);
+            removeListener.listen(notification);
+        };
     }
 }

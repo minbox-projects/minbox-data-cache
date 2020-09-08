@@ -5,6 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.minbox.framework.data.cache.client.Cache;
+import org.minbox.framework.data.cache.client.listener.CacheRemoveListener;
+
+import java.util.List;
 
 /**
  * The configuration needed to build the {@link Cache}
@@ -39,6 +42,10 @@ public class CacheConfiguration {
      * {@link CacheImplementation#CAFFEINE} is used by default
      */
     private CacheImplementation implementation = CacheImplementation.CAFFEINE;
+    /**
+     * The {@link CacheRemoveListener} instance
+     */
+    private CacheRemoveListener removeListener;
 
     public static CacheConfiguration defaultConfiguration() {
         return new CacheConfiguration();
